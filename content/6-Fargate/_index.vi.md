@@ -22,7 +22,7 @@ Trong module trước đó, chúng ta đã thấy cách cung cấp các máy tí
 
 [AWS Fargate](https://aws.amazon.com/fargate/) là một công nghệ cung cấp dung lượng tính toán được kích thước đúng theo nhu cầu cho các container. Với AWS Fargate, bạn không cần phải cấu hình, cấu hình hoặc mở rộng các nhóm máy ảo một cách tự động để chạy các container. Bạn cũng không cần phải chọn loại máy chủ, quyết định khi nào để mở rộng các nhóm nút của bạn, hoặc tối ưu hóa việc đóng gói cụm. Bạn có thể kiểm soát các Pod nào bắt đầu trên Fargate và cách chúng chạy với các hồ sơ Fargate. Các hồ sơ Fargate được xác định như một phần của cụm Amazon EKS của bạn.
 
-![EKS](/images/4/00012.png?featherlight=false&width=90pc)
+![EKS](/EKS-Workshop-3/images/4/00012.png?featherlight=false&width=90pc)
 
 Amazon EKS tích hợp Kubernetes với AWS Fargate bằng cách sử dụng các bộ điều khiển được xây dựng bởi AWS bằng cách sử dụng mô hình mở rộng được cung cấp bởi Kubernetes. Những bộ điều khiển này chạy như một phần của mặt trận điều khiển Kubernetes quản lý của Amazon EKS và chịu trách nhiệm về lập lịch các Pod Kubernetes nguyên bản vào Fargate. Các bộ điều khiển Fargate bao gồm một trình lập lịch mới chạy song song với trình lập lịch Kubernetes mặc định cùng với một số bộ điều khiển nhập và xác nhận. Khi bạn bắt đầu một Pod đáp ứng các tiêu chí để chạy trên Fargate, các bộ điều khiển Fargate đang chạy trong cụm nhận ra, cập nhật và lên lịch cho Pod trên Fargate.
 
