@@ -1,6 +1,6 @@
 ---
 title: "Tạo dung lượng dạng Spot"
-date: "`r Sys.Date()`"
+
 weight: 2
 chapter: false
 pre: "<b> 5.2 </b>"
@@ -37,7 +37,7 @@ ip-10-42-12-235.us-east-2.compute.internal   Ready    <none>   4h34m   vVAR::KUB
 
 Trong sơ đồ dưới đây, có hai "Node Groups" riêng biệt đại diện cho các Amazon EKS Managed Node Groups trong cụm. Hộp Node Groups đầu tiên đại diện cho Node Groups chứa các instance On-Demand trong khi hộp thứ hai đại diện cho Node Groups chứa các instance Spot. Cả hai đều liên kết với cụm EKS được chỉ định.
 
-![spot arch](./assets/managed-spot-arch.png)
+![spot arch](../../../images/5/00001.webp)
 
 Hãy tạo một Node Groups với các instance Spot. Lệnh sau tạo ra một Node Groups mới có tên `managed-spot`.
 

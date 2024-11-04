@@ -1,6 +1,6 @@
 ---
-title: "Resource allocation"
-date: "`r Sys.Date()`"
+title: "Cấp phát tài nguyên"
+
 weight: 3
 chapter: false
 pre: "<b> 6.3 </b>"

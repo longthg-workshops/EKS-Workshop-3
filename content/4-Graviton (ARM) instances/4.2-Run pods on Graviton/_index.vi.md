@@ -1,6 +1,6 @@
 ---
 title: "Chạy các pods trên Graviton"
-date: "`r Sys.Date()`"
+
 weight: 2
 chapter: false
 pre: "<b> 4.2 </b>"

@@ -1,41 +1,27 @@
 ---
-title: "Kubernetes trên AWS"
-date: "`r Sys.Date()`"
+title: "Amazon Elastic Kubernetes Service - Tính toán"
+
 weight: 1
 chapter: false
 ---
 
-# Kubernetes trên AWS
+# Amazon Elastic Kubernetes Service - Tính toán
 
-Kubernetes là một nền tảng mã nguồn mở, linh hoạt, có khả năng mở rộng, phục vụ việc quản lý các ứng dụng được đóng gói và các dịch vụ liên quan, giúp việc cấu hình và tự động hóa quá trình triển khai ứng dụng trở nên thuận tiện hơn. Được biết đến như một hệ sinh thái lớn và phát triển nhanh chóng, Kubernetes cung cấp sự hỗ trợ rộng rãi qua các dịch vụ và công cụ đa dạng.
+### Tổng quan
 
-Tên Kubernetes bắt nguồn từ tiếng Hy Lạp, nghĩa là người lái tàu hoặc hoa tiêu. Kubernetes được Google công bố mã nguồn vào năm 2014, dựa trên gần một thập kỷ kinh nghiệm quản lý workload lớn trong thực tế của Google, kết hợp với các ý tưởng và best practices từ cộng đồng.
+Một **cụm EKS _(EKS Cluster)_** chứa một hoặc nhiều **node EC2**, nơi các **Pod** được lên lịch và vẫn hành. Các **node EKS** chạy trong tài khoản AWS của bạn và kết nối với tầng điều khiển của cụm của bạn thông qua endpoint của API-Server.
 
-#### Quay ngược thời gian
+Các **node EKS** có thể là:
 
-Hãy xem xét tại sao Kubernetes lại quan trọng thông qua việc nhìn lại quá khứ.
+- **Các máy ảo Amazon EC2:** Chúng được tính phí theo giá tiêu chuẩn của EC2 (Xem [Phí dịch vụ Amazon EC2](https://aws.amazon.com/ec2/pricing/)). Ta có thể triển khai một hoặc nhiều node vào một **node group**. Một node group là một hoặc nhiều máy ảo EC2 được triển khai trong một **EC2 AutoScaling Group**.
 
-![Kubernetes](/EKS-Workshop-3/images/4/00010.svg?featherlight=false&width=60pc)
+- **AWS Fargate:** Dịch vụ tính toán phi máy chủ, cung cấp khả năng tính toán theo yêu cầu, đúng kích cỡ cho các container. Với AWS Fargate, bạn không phải tự cung cấp, tự cấu hình hay mở rộng tài nguyên EC2 để chạy container. Bạn cũng không cần phải chọn loại server hay quyết định cách thức AutoScaling. Thay vào đó, bạn có thể kiểm soát việc khởi tạo các Pod trên Fargate và cách chúng chạy với các cấu hình Fargate.
 
-**Thời kỳ triển khai truyền thống:** Ban đầu, các ứng dụng được chạy trực tiếp trên máy chủ vật lý, khiến việc phân bổ tài nguyên gặp khó khăn do không có cơ chế xác định ranh giới tài nguyên cho từng ứng dụng. Cách tiếp cận này dẫn đến nguy cơ một ứng dụng có thể sử dụng quá nhiều tài nguyên, ảnh hưởng đến hoạt động của các ứng dụng khác. Giải pháp là chạy mỗi ứng dụng trên một máy chủ vật lý riêng biệt, nhưng điều này lại không hiệu quả về mặt chi phí và tài nguyên.
+### Mục tiêu bài lab
+Trong bài lab này, chúng ta sẽ tìm hiểu về một số khái niệm và tài nguyên tính toán trên Amazon EKS, bao gồm:
 
-**Thời kỳ triển khai ảo hóa:** Ảo hóa được giới thiệu như một giải pháp cho phép chạy nhiều Máy ảo (VM) trên cùng một máy chủ vật lý, giúp cô lập ứng dụng và tăng cường bảo mật. Ảo hóa cũng giúp cải thiện hiệu quả sử dụng tài nguyên và khả năng mở rộng.
-
-**Thời kỳ triển khai Container:** Container giống như VM nhưng nhẹ hơn và chia sẻ Hệ điều hành (HĐH) với nhau. Container mang lại nhiều lợi ích như tạo mới và triển khai ứng dụng nhanh chóng, phát triển và triển khai liên tục, phân biệt rõ ràng giữa quá trình phát triển và vận hành, cung cấp tính nhất quán qua các môi trường, khả năng di chuyển giữa các cloud và HĐH, và quản lý ứng dụng tập trung.
-
-#### Tại sao bạn cần Kubernetes và nó có thể làm gì?
-
-Container là phương tiện hiệu quả để đóng gói và chạy ứng dụng của bạn. Trong môi trường sản xuất, cần có cơ chế quản lý các container một cách hiệu quả, đảm bảo không có downtime. Kubernetes giúp quản lý các hệ thống phân tán mạnh mẽ, tự động hóa việc nhân rộng, cung cấp các mẫu triển khai và nhiều hơn nữa.
-
-Kubernetes mang lại:
-
-- **Phát hiện dịch vụ và cân bằng tải**
-- **Điều phối bộ nhớ**
-- **Tự động rollouts và rollbacks**
-- **Đóng gói tự động**
-- **Tự phục hồi**
-- **Quản lý cấu hình và bảo mật**
-
-#### Những gì Kubernetes không phải là
-
-Kubernetes không phải là một hệ thống PaaS truyền thống, toàn diện. Nó hoạt động ở tầng container, cung cấp tính năng giống như PaaS như triển khai, nhân rộng, cân bằng tải, nhưng là một giải pháp linh hoạt và có thể mở rộng, không giới hạn loại ứng dụng được hỗ trợ, không triển khai mã nguồn hoặc build ứng dụng, không cung cấp dịch vụ ứng dụng cấp cao như middleware, databases, không bắt buộc sử dụng các giải pháp ghi nhật ký, giám sát hoặc cảnh báo, và không cung cấp hoặc áp dụng bất kỳ cấu hình toàn diện, bảo trì, quản lý hoặc hệ thống tự phục hồi. Kubernetes loại bỏ nhu cầu về điều phối truyền thống, thay vào đó là kiểm soát liên tục từ trạng thái hiện tại sang trạng thái mong muốn.
+- Managed Node Group
+- Quản lý và nâng cấp AMI
+- Graviton ARM Instance
+- Tiết kiệm chi phí với các Spot Instance
+- Triển khai các pod trên AWS Fargate

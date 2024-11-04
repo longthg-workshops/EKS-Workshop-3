@@ -1,6 +1,7 @@
 ---
-title: "Scaling the workload"
-date: "`r Sys.Date()`"
+title: "Mở rộng/thu hẹp khối
+ công việc"
+
 weight: 4
 chapter: false
 pre: "<b> 6.4 </b>"
