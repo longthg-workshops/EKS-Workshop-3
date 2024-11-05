@@ -16,9 +16,9 @@ Một trong những phương pháp tốt nhất để áp dụng thành công Sp
 
 Cluster Autoscaler là một công cụ tự động điều chỉnh kích thước của cluster Kubernetes khi có các pod không chạy trong cluster do tài nguyên không đủ (Mở rộng) hoặc có các nút trong cluster đã được sử dụng không đủ trong một khoảng thời gian (Thu nhỏ).
 
-
+{{% notice tip %}}
 Khi sử dụng Spot Instances với [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler) có một số điều cần [xem xét](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md). Một điều quan trọng cần xem xét là, mỗi Nhóm Tăng tự động nên được tạo từ các loại instance cung cấp khả năng gần như bằng nhau. Cluster Autoscaler sẽ cố gắng xác định các tài nguyên CPU, bộ nhớ và GPU được cung cấp bởi một Nhóm Tăng tự động dựa trên ghi đè đầu tiên được cung cấp trong Chính sách Các Loại Instances Kết hợp của một Nhóm Tăng tự động. Nếu có bất kỳ ghi đè nào được tìm thấy, chỉ loại instance đầu tiên được tìm thấy sẽ được sử dụng. Xem [Sử dụng Chính Sách Các Loại Instances Kết hợp và Spot Instances](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md#Using-Mixed-Instances-Policies-and-Spot-Instances) để biết chi tiết.
-
+{{% /notice %}}
 
 Khi áp dụng các phương pháp đa dạng hóa Spot vào EKS và các cluster K8s trong khi sử dụng Cluster Autoscaler để tự động mở rộng khả năng, chúng ta phải thực hiện đa dạng hóa theo cách tuân thủ các chế độ hoạt động được mong đợi của Cluster Autoscaler.
 
@@ -70,4 +70,6 @@ Bên trong, `ec2-instance-selector` đang gọi đến [DescribeInstanceTypes](h
 - Các loại instance thế hệ hiện tại (từ thế hệ thứ 4 trở đi)
 - Các loại instance không đáp ứng biểu thức chính quy `t.*` để loại bỏ các loại instance burstable
 
+{{% notice tip %}}
 Khối công việc của bạn có thể có các ràng buộc khác mà bạn nên xem xét khi chọn loại instance. Ví dụ. Các loại instance **t2** và **t3** là [loại burstable](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html) và có thể không phù hợp cho các khối công việc có hạn chế về CPU yêu cầu độ chính xác của CPU. Các loại instance như m5**a** là [loại AMD Instances](https://aws.amazon.com/ec2/amd/), nếu khối công việc của bạn nhạy cảm với sự khác biệt số liệu (ví dụ: tính toán rủi ro tài chính, mô phỏng công nghiệp) việc kết hợp các loại instance này có thể không phù hợp.
+{{% /notice %}}

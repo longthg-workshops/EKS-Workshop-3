@@ -20,9 +20,92 @@ Có vẻ như Pod của chúng ta thiếu nhãn `fargate=yes`. Vì vậy, chúng
 
 Cập nhật deployment như sau:
 
-```kustomization
-modules/fundamentals/fargate/enabling/deployment.yaml
-Deployment/checkout
+```
+~/environment/eks-workshop/modules/fundamentals/fargate/enabling/deployment.yaml
+```
+
+Kustomization:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+spec:
+  template:
+    metadata:
+      labels:
+        fargate: "yes"
+```
+
+Deployment yaml:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/created-by: eks-workshop
+    app.kubernetes.io/type: app
+  name: checkout
+  namespace: checkout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/instance: checkout
+      app.kubernetes.io/name: checkout
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/component: service
+        app.kubernetes.io/created-by: eks-workshop
+        app.kubernetes.io/instance: checkout
+        app.kubernetes.io/name: checkout
+        fargate: yes
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: checkout
+          image: public.ecr.aws/aws-containers/retail-store-sample-checkout:0.4.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 3
+          name: checkout
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: checkout
+      volumes:
+        - emptyDir:
+            medium: Memory
+          name: tmp-volume
 ```
 
 Áp dụng kustomization vào cluster:

@@ -1,6 +1,5 @@
 ---
 title: "Nâng cấp AMI"
-
 weight: 3
 chapter: false
 pre: "<b> 3.3 </b>"

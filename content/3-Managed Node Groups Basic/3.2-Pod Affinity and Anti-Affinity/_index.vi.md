@@ -40,10 +40,139 @@ Hãy thiết lập một chính sách `podAffinity` và `podAntiAffinity` trong 
 
 Kustomization sau thêm một phần `affinity` vào deployment **checkout** chỉ định cả chính sách **podAffinity** và **podAntiAffinity**:
 
-```kustomization
-modules/fundamentals/affinity/checkout/checkout.yaml
-Deployment/checkout
 ```
+~/environment/eks-workshop/modules/fundamentals/affinity/checkout/checkout.yaml
+```
+
+Sử dụng Kustomize:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  namespace: checkout
+spec:
+  template:
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - redis
+              topologyKey: kubernetes.io/hostname
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - service
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - checkout
+              topologyKey: kubernetes.io/hostname
+```
+
+Deployment yaml:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/created-by: eks-workshop
+    app.kubernetes.io/type: app
+  name: checkout
+  namespace: checkout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/instance: checkout
+      app.kubernetes.io/name: checkout
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/component: service
+        app.kubernetes.io/created-by: eks-workshop
+        app.kubernetes.io/instance: checkout
+        app.kubernetes.io/name: checkout
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - redis
+              topologyKey: kubernetes.io/hostname
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - service
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - checkout
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: checkout
+          image: public.ecr.aws/aws-containers/retail-store-sample-checkout:0.4.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 3
+          name: checkout
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: checkout
+      volumes:
+        - emptyDir:
+            medium: Memory
+          name: tmp-volume
+```
+
 
 Để thực hiện thay đổi, chạy lệnh sau để sửa đổi deployment **checkout** trong cluster của bạn:
 
@@ -81,9 +210,79 @@ Trong ví dụ này, pod `checkout` đầu tiên chạy trên cùng pod với po
 
 Tiếp theo, chúng ta sẽ mở rộng `checkout-redis` thành hai instances cho hai nodes của chúng ta, nhưng trước hết hãy sửa đổi chính sách deployment `checkout-redis` để phân tán các instances `checkout-redis` của chúng ta qua mỗi node. Để làm điều này, chúng ta chỉ cần tạo một quy tắc **podAntiAffinity**.
 
-```kustomization
-modules/fundamentals/affinity/checkout-redis/checkout-redis.yaml
-Deployment/checkout-redis
+```
+~/environment/eks-workshop/modules/fundamentals/affinity/checkout-redis/checkout-redis.yaml
+```
+Kustomization:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout-redis
+  labels:
+    app.kubernetes.io/created-by: eks-workshop
+    app.kubernetes.io/team: database
+spec:
+  template:
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - redis
+              topologyKey: kubernetes.io/hostname
+```
+
+Deployment yaml:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/created-by: eks-workshop
+    app.kubernetes.io/team: database
+  name: checkout-redis
+  namespace: checkout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: redis
+      app.kubernetes.io/instance: checkout
+      app.kubernetes.io/name: checkout
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: redis
+        app.kubernetes.io/created-by: eks-workshop
+        app.kubernetes.io/instance: checkout
+        app.kubernetes.io/name: checkout
+        app.kubernetes.io/team: database
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - redis
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - image: public.ecr.aws/docker/library/redis:6.0-alpine
+          imagePullPolicy: IfNotPresent
+          name: redis
+          ports:
+            - containerPort: 6379
+              name: redis
+              protocol: TCP
 ```
 
 Áp dụng quy tắc với lệnh sau:

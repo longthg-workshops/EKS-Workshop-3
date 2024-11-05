@@ -1,7 +1,7 @@
 ---
 title: "Amazon EKS Managed Node Groups"
 
-weight: 2
+weight: 3
 chapter: false
 pre: "<b> 1.2 </b>"
 ---

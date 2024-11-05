@@ -58,18 +58,19 @@ To list pods
   $ kubectl get pods
   ```
 
-## View Events
+### View Events
 
   ```bash
   $ kubectl get events
   ```
   
-## View Scheduler Logs
+### View Scheduler Logs
+
 To view scheduler logs
-  ```
+
+  ```bash
   $ kubectl logs my-custom-scheduler -n kube-system
   ```
-  ![cs2](../../images/cs2.PNG)
   
 #### K8s Reference Docs
 For more information on how to configure multiple schedulers, see below:

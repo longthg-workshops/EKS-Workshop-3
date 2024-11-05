@@ -38,7 +38,7 @@ $ kubectl get pods -n kube-system
 ### Sử dụng Custom Scheduler
 Để sử dụng một **scheduler** tùy chỉnh cho một **pod** cụ thể, bạn chỉ cần thêm một trường `schedulerName` vào định nghĩa **pod** và chỉ định tên của **scheduler** bạn muốn sử dụng.
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -52,27 +52,27 @@ spec:
 
 Để tạo **pod** sử dụng định nghĩa trên:
 
-```
+```bash
 $ kubectl create -f pod-definition.yaml
 ```
 
 Và sau đó bạn có thể kiểm tra danh sách các **pod** để xem **pod** mới đã được lên lịch chưa:
 
-```
+```bash
 $ kubectl get pods
 ```
 
 ### Xem Sự kiện
 Bạn cũng có thể xem các sự kiện liên quan đến lên lịch **pod** để kiểm tra xem có lỗi nào không:
 
-```
+```bash
 $ kubectl get events
 ```
 
 ### Xem Log của Scheduler
 Cuối cùng, để kiểm tra hoạt động của **scheduler** tùy chỉnh, bạn có thể xem log của nó:
 
-```
+```bash
 $ kubectl logs my-custom-scheduler -n kube-system
 ```
 
