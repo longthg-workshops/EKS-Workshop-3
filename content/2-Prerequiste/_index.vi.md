@@ -1,41 +1,25 @@
 ---
 title: "Các Bước Chuẩn Bị"
-date: "`r Sys.Date()`"
+
 weight: 2
 chapter: false
 pre: "<b> 2. </b>"
 ---
 
-#### Các Bước Chuẩn Bị
+Trước khi làm các bài thực hành của bộ workshop EKS, vui lòng thực hiện ba bước sau đây:
 
-Thực hiện lệnh sau từ Cloud9 đã tạo trong bài đầu tiên:
+1. [Chuẩn bị môi trường](./2.1-prepare-environment)
 
-```bash timeout=600 wait=30
-$ prepare-environment fundamentals/mng/basics
-```
+    - Tạo và chuẩn bị cho hệ thống của bạn kết nối được với AWS.
 
-Trong lab "Bắt đầu", chúng ta đã triển khai ứng dụng mẫu của mình lên **EKS** và đã thấy các **Pod** đang chạy. Nhưng các **Pod** này đang chạy ở đâu?
+    - Chuẩn bị IDE và cây thư mục mã nguồn.
 
-Chúng ta có thể kiểm tra managed node group mặc định đã được chuẩn bị trước cho bạn:
+2. [Tạo cụm EKS](./2.2-cluster-creation)
 
-```bash
-$ eksctl get nodegroup --cluster $EKS_CLUSTER_NAME --name $EKS_DEFAULT_MNG_NAME
-```
+    - Tạo cụm EKS để triển khai các khối công việcs.
 
-Có một số thuộc tính của các managed node group mà chúng ta có thể thấy từ đầu ra này:
+    - Tạo bằng CloudFormation hoặc Terraform
 
-- Cấu hình về số lượng tối thiểu, tối đa và mong muốn của số lượng **node** trong nhóm này
-- Loại instance cho managed node group này là `m5.large`
-- Sử dụng loại **EKS AMI** `AL2_x86_64`
+3. [Tìm hiểu cấu trúc bài thực hành](./2.3-structure)
 
-Chúng ta cũng có thể kiểm tra các **node** và vị trí trong các AZ.
-
-```bash
-$ kubectl get nodes -o wide --label-columns topology.kubernetes.io/zone
-```
-
-Bạn nên thấy:
-
-- Các **node** được phân phối trên nhiều subnet trong các AZ khác nhau, cung cấp tính sẵn có cao
-
-Trong suốt module này, chúng ta sẽ thực hiện các thay đổi lên managed node group này để cho thấy các khả năng cơ bản của các **MNGs**.
+4. [Chuẩn bị môi trường cho lab này](./2.4-thislab)

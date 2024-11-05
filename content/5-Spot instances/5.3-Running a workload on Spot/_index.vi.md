@@ -1,6 +1,5 @@
 ---
 title: "Chạy một workloads trên Spot"
-date: "`r Sys.Date()`"
 weight: 3
 chapter: false
 pre: "<b> 5.3 </b>"
@@ -10,9 +9,36 @@ pre: "<b> 5.3 </b>"
 
 Tiếp theo, chúng ta sẽ sửa đổi ứng dụng cửa hàng bán lẻ mẫu của chúng ta để chạy thành phần catalog trên các Spot instances mới được tạo ra. Để làm điều này, chúng ta sẽ sử dụng Kustomize để áp dụng một bản vá vào `catalog` Deployment, thêm một trường `nodeSelector` với `eks.amazonaws.com/capacityType: SPOT`.
 
-```kustomization
-modules/fundamentals/mng/spot/deployment/deployment.yaml
-Deployment/catalog
+```
+~/environment/eks-workshop/modules/fundamentals/mng/spot/deployment/deployment.yaml
+```
+
+Kustomization:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+spec:
+  template:
+    spec:
+      nodeSelector:
+        eks.amazonaws.com/capacityType: SPOT
+```
+
+Deployment yaml:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+spec:
+  template:
+    spec:
+      nodeSelector:
+        eks.amazonaws.com/capacityType: SPOT
 ```
 
 Áp dụng patch Kustomize với lệnh sau.

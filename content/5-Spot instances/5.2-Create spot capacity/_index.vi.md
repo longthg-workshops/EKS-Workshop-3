@@ -1,6 +1,6 @@
 ---
 title: "Tạo dung lượng dạng Spot"
-date: "`r Sys.Date()`"
+
 weight: 2
 chapter: false
 pre: "<b> 5.2 </b>"
@@ -22,6 +22,7 @@ ip-10-42-142-197.us-east-2.compute.internal   Ready    <none>   133m   vVAR::KUB
 ip-10-42-161-44.us-east-2.compute.internal    Ready    <none>   133m   vVAR::KUBERNETES_NODE_VERSION    ON_DEMAND
 ```
 
+{{% notice tip %}}
 Nếu bạn muốn lấy các node dựa trên một loại dung lượng cụ thể, như các instance `on-demand`, bạn có thể sử dụng "<b>label selectors</b>". Trong tình huống cụ thể này, bạn có thể đạt được điều này bằng cách đặt label selector thành `capacityType=ON_DEMAND`.
 
 ```bash
@@ -33,11 +34,12 @@ ip-10-42-10-200.us-east-2.compute.internal   Ready    <none>   3d10h   vVAR::KUB
 ip-10-42-11-94.us-east-2.compute.internal    Ready    <none>   3d10h   vVAR::KUBERNETES_NODE_VERSION
 ip-10-42-12-235.us-east-2.compute.internal   Ready    <none>   4h34m   vVAR::KUBERNETES_NODE_VERSION
 ```
+{{% /notice %}}
 
 
 Trong sơ đồ dưới đây, có hai "Node Groups" riêng biệt đại diện cho các Amazon EKS Managed Node Groups trong cụm. Hộp Node Groups đầu tiên đại diện cho Node Groups chứa các instance On-Demand trong khi hộp thứ hai đại diện cho Node Groups chứa các instance Spot. Cả hai đều liên kết với cụm EKS được chỉ định.
 
-![spot arch](./assets/managed-spot-arch.png)
+![spot arch](../../../images/5/00001.webp)
 
 Hãy tạo một Node Groups với các instance Spot. Lệnh sau tạo ra một Node Groups mới có tên `managed-spot`.
 
@@ -55,7 +57,7 @@ $ aws eks create-nodegroup \
 
 Đối số `--capacity-type SPOT` chỉ định rằng tất cả dung lượng trong Amazon EKS Managed Node Groups này nên là Spot.
 
-
+{{% notice tip %}}
 Lệnh aws `eks wait nodegroup-active` có thể được sử dụng để đợi cho đến khi một Node Groups EKS cụ thể đã hoạt động và sẵn sàng sử dụng. Lệnh này là một phần của AWS CLI và có thể được sử dụng để đảm bảo rằng Node Groups được chỉ định đã được tạo thành công và tất cả các instance liên quan đều đang chạy và sẵn sàng.
 
 ```bash wait=30 timeout=300
@@ -63,7 +65,7 @@ $ aws eks wait nodegroup-active \
   --cluster-name $EKS_CLUSTER_NAME \
   --nodegroup-name managed-spot
 ```
-
+{{% /notice %}}
 
 Khi Amazon EKS Managed Node Groups mới của chúng tôi là **Active**, chạy lệnh sau.
 

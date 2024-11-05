@@ -1,6 +1,7 @@
 ---
-title: "Scaling the workload"
-date: "`r Sys.Date()`"
+title: "Mở rộng/thu hẹp khối
+ công việc"
+
 weight: 4
 chapter: false
 pre: "<b> 6.4 </b>"
@@ -12,9 +13,90 @@ Một trong những lợi ích nổi bật của **Fargate** đó là mô hình 
 
 Trong các ví dụ mà chúng ta đã xem xét cho đến nay, chỉ sử dụng một bản sao **Pod** duy nhất. Điều gì sẽ xảy ra nếu chúng ta mở rộng quy mô theo cách ngang như chúng ta thường mong đợi trong một kịch bản thực tế? Hãy mở rộng quy mô dịch vụ `checkout` và tìm hiểu:
 
+```
+~/environment/eks-workshop/modules/fundamentals/fargate/scaling/deployment.yaml
+```
+
+Kustomization:
+
 ```yaml
-modules/fundamentals/fargate/scaling/deployment.yaml
-Deployment/checkout
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+spec:
+  replicas: 3
+```
+
+Deployment yaml:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/created-by: eks-workshop
+    app.kubernetes.io/type: app
+  name: checkout
+  namespace: checkout
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: service
+      app.kubernetes.io/instance: checkout
+      app.kubernetes.io/name: checkout
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/component: service
+        app.kubernetes.io/created-by: eks-workshop
+        app.kubernetes.io/instance: checkout
+        app.kubernetes.io/name: checkout
+        fargate: yes
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: checkout
+          image: public.ecr.aws/aws-containers/retail-store-sample-checkout:0.4.0
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 3
+          name: checkout
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              memory: 2.5G
+            requests:
+              cpu: "1"
+              memory: 2.5G
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: checkout
+      volumes:
+        - emptyDir:
+            medium: Memory
+          name: tmp-volume
 ```
 
 Áp dụng kustomization và chờ đợi cho đến khi việc triển khai hoàn tất:
