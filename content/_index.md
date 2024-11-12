@@ -7,6 +7,8 @@ chapter: false
 
 # Amazon Elastic Kubernetes Service - Computing
 
+![EKS Arch](../images/home/Architecture-of-EKS.webp)
+
 ### Overview
 
 An EKS cluster contains one or more EC2 nodes that Pods are scheduled on. EKS nodes run in your AWS account and connect to the control plane of your cluster through the cluster API server endpoint.
