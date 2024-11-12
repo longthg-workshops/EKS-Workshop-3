@@ -22,4 +22,4 @@ Trước khi làm các bài thực hành của bộ workshop EKS, vui lòng th�
 
 3. [Tìm hiểu cấu trúc bài thực hành](./2.3-structure)
 
-4. [Chuẩn bị môi trường cho lab này](./2.4-thislab)
+Vì workshop này chứa nhiều hơn một bài thực hành, các phần hướng chuẩn bị môi trường sẽ được viết riêng trong mỗi bài.
