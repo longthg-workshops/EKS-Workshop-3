@@ -1,6 +1,5 @@
 ---
 title: "Amazon Elastic Kubernetes Service - Computing"
-
 weight: 1
 chapter: false
 ---
