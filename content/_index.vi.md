@@ -1,6 +1,5 @@
 ---
 title: "Amazon Elastic Kubernetes Service - Tính toán"
-
 weight: 1
 chapter: false
 ---
