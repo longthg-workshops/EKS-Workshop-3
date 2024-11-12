@@ -9,16 +9,10 @@ pre: "<b> 1.1.2 </b>"
 In this section, we will take a look at **`Labels and Selectors`**
 
 **Labels** and **Selectors** are standard methods to group things together. **Labels** are properties attached to each item, while **Selectors** help you to filter these items.
-
-![labels-ckc](../../images/labels-ckc.PNG)
- 
-![sl](../../images/sl.PNG)
   
 ### How are labels and selectors are used in kubernetes?
 
 - We have created different types of objects in kubernetes such as **`PODs`**, **`ReplicaSets`**, **`Deployments`** etc.
-  
-![ls](../../images/ls.PNG)
   
 The question, is **_"How do you specify labels ?"_** It is quite simple. You just need to create one in the Metadata of the yaml definition file:
 
@@ -37,7 +31,6 @@ spec:
     ports:
     - containerPort: 8080
 ```
-![lpod](../../images/lpod.PNG)
  
 Once the pod is created, to select the pod with labels run the below command
 ```bash
@@ -70,8 +63,6 @@ spec:
         image: simple-webapp   
 ```
 
-![lrs](../../images/lrs.PNG)
-
 To create Service that routes requests to the pods inside the ReplicaSet above, we create the following YAML:
  
 ```yaml
@@ -87,7 +78,6 @@ ports:
     port: 80
     targetPort: 9376 
 ```
-![lrs1](../../images/lrs1.PNG)
   
 ## Annotations
 - While labels and selectors are used to group objects, annotations are used to record other details for informative purpose.
@@ -116,7 +106,6 @@ template:
     - name: simple-webapp
         image: simple-webapp   
 ```
-![annotations](../../images/annotations.PNG)
 
 ### K8s Reference Docs:
 - https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/

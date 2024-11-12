@@ -22,4 +22,4 @@ Before getting into the labs of this workshop, the following three steps must be
 
 3. [Get to know the Lab Structure](./2.3-structure)
 
-4. [Prepare your environment for this lab](./2.4-thislab)
+As this workshop consists of more than one labs, the environment preparation will be written separately for each lab.
