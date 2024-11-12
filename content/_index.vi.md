@@ -7,6 +7,8 @@ chapter: false
 
 # Amazon Elastic Kubernetes Service - Tính toán
 
+![EKS Arch](../images/home/Architecture-of-EKS.webp)
+
 ### Tổng quan
 
 Một **cụm EKS _(EKS Cluster)_** chứa một hoặc nhiều **node EC2**, nơi các **Pod** được lên lịch và vẫn hành. Các **node EKS** chạy trong tài khoản AWS của bạn và kết nối với tầng điều khiển của cụm của bạn thông qua endpoint của API-Server.
