@@ -26,12 +26,9 @@ spec:
     - containerPort: 8080
     nodeName: node02
 ```
-![sc1](../../images/sc1.png)
-    
+
 ### No Scheduler
 - You can manually assign pods to node itself. Well without a scheduler, to schedule pod is to set **`nodeName`** property in your pod definition file while creating a pod.
-    
-![sc2](../../images/sc2.PNG)
     
 - Another way to schedule your pod is to use a **_Binding_** resource:
 ```yaml
@@ -57,10 +54,8 @@ spec:
     image: nginx
     ports:
     - containerPort: 8080
-```
-![sc3](../../images/sc3.PNG)
-    
-    
+```  
+
 ### K8s Reference Docs:
 - https://kubernetes.io/docs/reference/using-api/api-concepts/
 - https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename

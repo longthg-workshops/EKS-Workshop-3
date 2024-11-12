@@ -15,7 +15,7 @@ To use **Node Selector**, add a new property into the **spec** section of the **
 ```yaml
 [...]
 spec:
-  [...]S
+  [...]
   nodeSelector:
     size: Large
 ```

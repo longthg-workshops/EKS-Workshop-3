@@ -7,7 +7,7 @@ chapter: false
 
 # Amazon Elastic Kubernetes Service - Computing
 
-![EKS Arch](../images/home/Architecture-of-EKS.webp)
+![EKS Arch](images/home/Architecture-of-EKS.webp)
 
 ### Overview
 
