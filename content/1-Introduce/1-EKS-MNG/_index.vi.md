@@ -1,8 +1,8 @@
 ---
 title: "Amazon EKS Managed Node Groups"
-weight: 2
+weight: 1
 chapter: false
-pre: "<b> 1.2 </b>"
+pre: "<b> 1.1 </b>"
 ---
 
 # Amazon EKS Managed Node Groups
@@ -15,7 +15,7 @@ Các **node EKS** là các trường hợp tiêu chuẩn của Amazon EC2. Bạn
 
 [Các node group được quản lý của Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html) tự động hóa việc cung cấp và quản lý vòng đời của các node cho các cụm Amazon EKS. Điều này rất giúp đỡ trong các hoạt động vận hành như cập nhật liên tục cho các AMI mới hoặc triển khai phiên bản Kubernetes mới.
 
-![EKS](../../../images/4/00013.png?featherlight=false&width=30pc)
+![EKS](/images/4/00013.png?featherlight=false&width=30pc)
 
 Các ưu điểm của việc chạy các node group được quản lý của Amazon EKS bao gồm:
 
