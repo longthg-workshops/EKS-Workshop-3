@@ -18,7 +18,7 @@ Cho dù bạn đang sử dụng các phiên bản **On-demand** hoặc **Spot in
 
 Các instance dựa trên **Graviton** có thể được xác định bằng chữ `g` trong phần **Processor family** của [Qui tắc đặt tên loại instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#instance-type-names).
 
-![EKS](../../images/4/00010.png?featherlight=false&width=30pc)
+![EKS](/images/4/00010.png?featherlight=false&width=30pc)
 
 ### Taints và Toleration với các node Graviton
 

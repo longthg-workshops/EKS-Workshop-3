@@ -1,8 +1,8 @@
 ---
 title: "Amazon EC2 Spot instance"
-weight: 4
+weight: 1
 chapter: false
-pre: "<b> 1.4 </b>"
+pre: "<b> 1.1 </b>"
 ---
 
 A **Spot Instance** uses **spare** EC2 capacity that is available for less than the On-Demand price. Because Spot Instances enable you to request unused EC2 instances at steep discounts, you can lower your Amazon EC2 costs significantly. The hourly price for a Spot Instance is called a **Spot price**. The spot price of each instance type in each Availability Zone is set by Amazon EC2, and is adjusted gradually based on the long-term supply of and demand for Spot Instances. Your Spot Instance runs whenever capacity is available.s
