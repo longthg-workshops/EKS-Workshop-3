@@ -15,7 +15,7 @@ pre: "<b> 1.1 </b>"
 
 Adding **Graviton**-based instances to your Amazon EKS Managed Node Groups **EKS** introduces a multi-architecture infrastructure and the need for your application to run on different CPUs. This means that your application code needs to be available in different **Instruction Set Architecture (ISA)** implementations. There are a variety of resources to help teams plan and migrate applications to **Graviton**-based instances. Check out the [Graviton migration plan](https://pages.awscloud.com/rs/112-TZM-766/images/Graviton%20Challenge%20Plan.pdf) and [Porting Advisor for Graviton](https://github.com/aws/porting-advisor-for-graviton) for helpful resources.
 
-![EKS](/images/4/00011.png?featherlight=false&width=40pc)
+![EKS](EKS-Workshop-3/images/4/00011.png?featherlight=false&width=40pc)
 
 The retail store sample web application architecture contains [container images pre-built for both **x86-64** and **ARM64** CPU architectures](https://gallery.ecr.aws/aws-containers/retail-store-sample-ui).
 

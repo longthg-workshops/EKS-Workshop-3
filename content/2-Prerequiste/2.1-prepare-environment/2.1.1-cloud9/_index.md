@@ -45,7 +45,7 @@ https://us-west-2.console.aws.amazon.com/cloud9/ide/7b05513358534d11afeb7119845c
 
 Open the URL in your browser to use Cloud9.
 
-![EKS](/images/2/1/1/00016.png?featherlight=false&width=90pc)
+![EKS](EKS-Workshop-3/images/2/1/1/00016.png?featherlight=false&width=90pc)
 
 You can now close **CloudShell**, as all the following commands will be done in the **Cloud9** Terminal. The **AWS CLI** is also install and will retrieve authentication information attached to the IDE. You can run the following command to check it:
 

@@ -6,7 +6,7 @@ chapter: false
 
 # Amazon Elastic Kubernetes Service - Tính toán
 
-![EKS Arch](/images/home/Architecture-of-EKS.webp)
+![EKS Arch](EKS-Workshop-3/images/home/Architecture-of-EKS.webp)
 
 ### Tổng quan
 

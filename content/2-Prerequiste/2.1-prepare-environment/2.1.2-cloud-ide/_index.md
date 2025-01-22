@@ -34,44 +34,44 @@ Now select that tab that corresponds to the IDE that you have installed.
 
 Scroll to the bottom of the screen and acknowledge the IAM notice:
 
-![acknowledge IAM](/images/2/1/2/acknowledge-iam.webp)
+![acknowledge IAM](EKS-Workshop-3/images/2/1/2/acknowledge-iam.webp)
 
 Then click the **Create stack** button:
 
-![Create Stack](/images/2/1/2/create-stack.webp)
+![Create Stack](EKS-Workshop-3/images/2/1/2/create-stack.webp)
 
 The CloudFormation stack will take roughly 5 minutes to deploy, and once completed you can retrieve information required to continue from the **Outputs** tab:
 
-![cloudformation outputs](/images/2/1/2/vscode-outputs.webp)
+![cloudformation outputs](EKS-Workshop-3/images/2/1/2/vscode-outputs.webp)
 
 The `IdeUrl` output contains the URL to enter in your browser to access the IDE. The `IdePasswordSecret` contains a link to an AWS Secrets Manger secret that contains a generated password for the IDE.
 
 To retrieve the password open that URL and click the **Retrieve** button:
 
-![secretsmanager retrieve](/images/2/1/2/vscode-password-retrieve.webp)
+![secretsmanager retrieve](EKS-Workshop-3/images/2/1/2/vscode-password-retrieve.webp)
 
 The password will then be available for you to copy:
 
-![cloudformation outputs](/images/2/1/2/vscode-password-visible.webp)
+![cloudformation outputs](EKS-Workshop-3/images/2/1/2/vscode-password-visible.webp)
 
 Open the IDE URL provided and you will be prompted for the password:
 
-![cloudformation outputs](/images/2/1/2/vscode-password.webp)
+![cloudformation outputs](EKS-Workshop-3/images/2/1/2/vscode-password.webp)
 
 After submitting your password you will be presented with the initial VSCode screen:
 
-![cloudformation outputs](/images/2/1/2/vscode-splash.webp)
+![cloudformation outputs](EKS-Workshop-3/images/2/1/2/vscode-splash.webp)
 
 {{% notice note %}}
 In case CloudFormation failed to create a CloudFront Distribution resource due to your account not being verified, you can request limit increase for CloudFront Distribution [here](https://support.console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase).
-![](/images/2/1/2/quota-failed-01.jpg?featherlight=false&width=30pc)
+![](EKS-Workshop-3/images/2/1/2/quota-failed-01.jpg?featherlight=false&width=30pc)
 At _Service_, choose "CloudFront Distribution".
-![](/images/2/1/2/quota-inc-01.jpg?featherlight=false&width=90pc)
+![](EKS-Workshop-3/images/2/1/2/quota-inc-01.jpg?featherlight=false&width=90pc)
 At _Request 1_, choose _Web Distributions per Account_ for _Quota_ set a higher value than your previous value (if you're using a new account, just enter any positive number)
-![](/images/2/1/2/quota-inc-02.jpg?featherlight=false&width=90pc)
+![](EKS-Workshop-3/images/2/1/2/quota-inc-02.jpg?featherlight=false&width=90pc)
 At _Case description_, copy the detailed error return from CloudStack, at the CloudFront Distribution creation step, and paste it, then enter a brief description of your problem.
-![](/images/2/1/2/quota-inc-03.jpg?featherlight=false&width=90pc)
+![](EKS-Workshop-3/images/2/1/2/quota-inc-03.jpg?featherlight=false&width=90pc)
 After that, choose a contact method, then click _Submit_ at the bottom.
-![](/images/2/1/2/quota-inc-04.jpg?featherlight=false&width=90pc)
+![](EKS-Workshop-3/images/2/1/2/quota-inc-04.jpg?featherlight=false&width=90pc)
 Now you wait for up to a few days for the Support center to work on your case.
 {{% /notice %}}

@@ -15,7 +15,7 @@ Các bộ xử lý **Graviton** tăng cường trải nghiệm **EKS** cho các 
 
 Thêm các instance dựa trên **Graviton** vào Amazon EKS Managed Node Groups **EKS** của bạn giới thiệu một cơ sở hạ tầng đa kiến trúc và nhu cầu cho ứng dụng của bạn chạy trên các CPU khác nhau. Điều này có nghĩa là mã ứng dụng của bạn cần phải có sẵn trong các triển khai **Kiến trúc Tập lệnh Hướng dẫn (ISA)** khác nhau. Có nhiều tài nguyên khác nhau để giúp các nhóm lập kế hoạch và chuyển ứng dụng sang các instance dựa trên **Graviton**. Hãy kiểm tra [kế hoạch chuyển đổi Graviton](https://pages.awscloud.com/rs/112-TZM-766/images/Graviton%20Challenge%20Plan.pdf) và [Cố vấn Chuyển đổi cho Graviton](https://github.com/aws/porting-advisor-for-graviton) để có các tài nguyên hữu ích.
 
-![EKS](/images/4/00011.png?featherlight=false&width=40pc)
+![EKS](EKS-Workshop-3/images/4/00011.png?featherlight=false&width=40pc)
 
 Kiến trúc ứng dụng web mẫu của cửa hàng bán lẻ chứa [container images đã được xây sẵn cho cả hai kiến trúc CPU **x86-64** và **ARM64**](https://gallery.ecr.aws/aws-containers/retail-store-sample-ui).
 
